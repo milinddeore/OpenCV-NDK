@@ -401,6 +401,8 @@ void Image_Reader::PresentImage270(ANativeWindow_Buffer *buf, AImage *image) {
   int32_t width = MIN(buf->height, (srcRect.right - srcRect.left));
 
   uint32_t *out = static_cast<uint32_t *>(buf->bits);
+  out += height -1;
+
   for (int32_t y = 0; y < height; y++) {
     const uint8_t *pY = yPixel + yStride * (y + srcRect.top) + srcRect.left;
 
@@ -413,10 +415,9 @@ void Image_Reader::PresentImage270(ANativeWindow_Buffer *buf, AImage *image) {
       int testb = pU[uv_offset];
       int testc = pV[uv_offset];
       int testA = pY[x];
-      out[(width - 1 - x) * buf->stride] =
-          YUV2RGB(testA, testb, testc);
+      out[(width - 1 - x) * buf->stride] = YUV2RGB(testA, testb, testc);
     }
-    out += 1;  // move to the next column
+    out -= 1;  // move to the next column
   }
 }
 
