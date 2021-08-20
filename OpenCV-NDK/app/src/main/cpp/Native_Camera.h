@@ -41,6 +41,8 @@ class Native_Camera {
   bool MatchCaptureSizeRequest(ImageFormat* resView, int32_t width, int32_t height);
 
   bool CreateCaptureSession(ANativeWindow* window);
+  
+  void Native_Camera::CreateCaptureSessionClose()
 
   int32_t GetCameraCount() { return m_camera_id_list->numCameras; }
   uint32_t GetOrientation() { return m_camera_orientation; };
