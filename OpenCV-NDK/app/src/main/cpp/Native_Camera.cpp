@@ -159,3 +159,22 @@ bool Native_Camera::CreateCaptureSession(ANativeWindow* window) {
 
   return true;
 }
+
+void Native_Camera::CreateCaptureSessionClose()
+ {
+     if (m_capture_session) {
+         /* Abort all kind of requests */
+         ACameraCaptureSession_abortCaptures(m_capture_session);
+         ACameraCaptureSession_stopRepeating(m_capture_session);
+
+         /* Close capture session */
+         ACameraCaptureSession_close(m_capture_session);
+         m_capture_session = nullptr;
+     }
+
+     /* Close the camera device */
+     if (m_camera_device) {
+         ACameraDevice_close(m_camera_device);
+         m_camera_device = nullptr;
+     }
+ }
